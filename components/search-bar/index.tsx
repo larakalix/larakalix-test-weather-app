@@ -3,26 +3,10 @@
 
 'use client';
 
-import { useRouter } from "next/navigation";
-import { ChangeEvent } from "react";
+import { useSearchBar } from "./use-search-bar";
 
 export const SearchBar = () => {
-    // Con este hook obtenemos un objeto que nos permitira hacer un push
-    // al URL del navegador, para actualizar el dato de busqueda con la ciudad
-    // que obtenemos del formulario.
-    const router = useRouter();
-
-    // Esta function se ejecuta en el evento onSubmit del formulario,
-    // lo que nos permite obtener el valor del input y actualizar el URL del navegador
-    const handleSearch = (event: ChangeEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        const city = formData.get("city") as string;
-
-        // Actualizamos el URL con el valor, en caso de existir,
-        // de lo contrario, volvemos al URL raiz sin query params.
-        router.push(city ? `?city=${encodeURIComponent(city)}` : "/");
-    };
+    const { handleSearch } = useSearchBar();
 
     return (
         <div className="w-full mt-6">
@@ -30,7 +14,7 @@ export const SearchBar = () => {
                 <input
                     type="text"
                     name="city"
-                    placeholder="ex: London"
+                    placeholder="Search city, ex: London"
                     className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
 
